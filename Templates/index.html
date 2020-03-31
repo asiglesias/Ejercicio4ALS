@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Consumo</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <style>
+            body
+            {
+                height: 100%;
+
+            }
+            #content{
+                width: 20%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 10%;
+                padding: 40px;
+                border: 1px solid lightgray;
+                box-shadow: 1px 1px 1px 1px lightgray;
+                border-radius: 20px;
+                text-align: center;
+                horiz-align: center;
+            }
+            form input{
+                display: block;
+                horiz-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 10px;
+            }
+        </style>
+
+        <script>
+            function checkInputs()
+            {
+                var toret = true;
+                const kmInput = document.getElementById("kmInput");
+                const minutesInput = document.getElementById("minutesInput");
+                const consumoInput = document.getElementById("consumoInput");
+                const errorLabel = document.getElementById("error")
+
+
+
+                toret = checkIfIsNumberAndNotEmpty(kmInput.value) ? toret : false;
+                toret = checkIfIsNumberAndNotEmpty(minutesInput.value) ? toret : false;
+                toret = checkIfIsNumberAndNotEmpty(consumoInput.value) ? toret : false;
+
+                if(!toret)
+                {
+                    errorLabel.hidden = false;
+                }
+
+                return toret;
+            }
+
+            function checkIfIsNumberAndNotEmpty(value)
+            {
+                if(value.trim().length > 0 && !isNaN(value))
+                {
+                    return true;
+                }
+                return false;
+            }
+        </script>
+    </head>
+    <body>
+        <div id="content">
+            <h1>Consumo</h1>
+            <form action="/calcular"
+                  method="post"
+                  onsubmit="return checkInputs()">
+
+                <label for="kmInput">Kilometros</label>
+                <input type="number"  name="kmInput" id="kmInput" class="form-control" placeholder="Ej. 300" />
+                <label for="minutesInput">Tiempo</label>
+                <input type="number" name="minutesInput" id="minutesInput" placeholder="Tiempo en minutos" class="form-control" />
+                <label for="consumoInput">Consumo medio</label>
+                <input type="number" name="consumoInput" id="consumoInput" placeholder="Consumo medio (l/100km)" class="form-control"/>
+                <p class="text-danger" id="error" hidden="true">Todos los campos son obligatorios y tienen que ser númericos</p>
+                <input type="submit" value="Calcular" class="btn btn-primary"/>
+            </form>
+
+        </div>
+    </body>
+</html>
